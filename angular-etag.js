@@ -9,13 +9,11 @@ angular.module('AngularEtag', [])
   var storage = {};
   storage.save = function(key, obj){
     var val = JSON.stringify(obj);
-    //console.log('savign', val);
     $window.localStorage.setItem(key, val);
   };
 
   storage.get = function(key){
     var val = $window.localStorage.getItem(key);
-    console.log('val', val);
     return JSON.parse(val);
   };
 
@@ -33,16 +31,13 @@ angular.module('AngularEtag', [])
   }
 
   function cacheEtag(etag, opts, resp){
-    console.log('caching etag', etag, opts, resp);
     if(opts && opts.url){
       if(resp){
         var cacheResponse = {};
         angular.extend(cacheResponse, resp);
         cacheResponse.status = 203;
 
-        console.log('saving', eTagKey(opts.url), makeCacheObj(etag, opts, cacheResponse));
         storage.save(eTagKey(opts.url), makeCacheObj(etag, opts, cacheResponse) );
-        console.log('saved');
       }
     }
   }
@@ -51,7 +46,6 @@ angular.module('AngularEtag', [])
     var url = urlOpts.url;
 
     var cacheObj = storage.get(eTagKey(url));
-    console.log('cacheObj', cacheObj);
 
     //var eTag = "\"060d3cf9dff002a0f3c7cdaf7ed7ec39\"";
     if(cacheObj && cacheObj.etag){
@@ -60,20 +54,15 @@ angular.module('AngularEtag', [])
     }
     angular.extend(urlOpts, {method: 'GET'});
 
-    console.log('reqOpts', urlOpts);
-
     return $http(urlOpts)
       .then(function(resp){
-        console.log('respSuccess', resp.headers(), resp.status);
         var etag = resp.headers().etag;
         if(etag){ cacheEtag(etag, urlOpts, resp); }
         return resp;
       })
       .catch(function(resp){
-        console.log('respCatch', resp.headers(), resp.status);
         if(resp.status === 304){
-          console.log('fetch from cache');
-          console.log(storage.get( cacheObj ));
+          //console.log('storage get', storage.get( cacheObj ));
           cacheObj.response.headers = function(){
             return {"X-Local-Cache": "Nothing sent to server"};
           };

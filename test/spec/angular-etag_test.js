@@ -70,7 +70,6 @@ describe('angular-etag', function(){
 
             _ehttp.get(urlOpts)
               .then(function(resp){
-                //console.log('resp', resp, resp.headers());
                 reqHeaders = urlOpts.headers;
                 respData = resp.data;
                 respStatus = resp.status;
@@ -183,7 +182,6 @@ describe('angular-etag', function(){
 
             _ehttp.get(urlOpts)
               .then(function(resp){
-                console.log('resp', resp, resp.headers());
                 respHeaders = resp.headers();
                 reqHeaders = urlOpts.headers;
                 respData = resp.data;
@@ -195,7 +193,7 @@ describe('angular-etag', function(){
 
           });
 
-          it('no response data from server', function(){
+          it('has content served from cache', function(){
             expect(reqHeaders).not.toBeDefined();
             expect(respData).not.toBeDefined();
             expect(respHeaders).not.toBeDefined();
@@ -204,20 +202,8 @@ describe('angular-etag', function(){
 
             expect(reqHeaders['If-None-Match']).toEqual('abcde');
             expect(respData).toBeDefined();
-            expect(respHeaders['X-Local-Cache']).toEqual("Nothing sent to server");
-          });
-
-          it('serves response from cache', function(){
-            spyOn(_window.localStorage, 'getItem').andReturn(localStorageItem);
-
-            expect(_window.localStorage.getItem).not.toHaveBeenCalled();
-            expect(respStatus).not.toEqual(203);
-
-            _httpBackend.flush();
-
             expect(respStatus).toEqual(203);
-            expect(_window.localStorage.getItem).toHaveBeenCalled();
-
+            expect(respHeaders['X-Local-Cache']).toEqual("Nothing sent to server");
           });
         });
 
