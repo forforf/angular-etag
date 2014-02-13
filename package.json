@@ -1,0 +1,18 @@
+{
+  "name": "angular-etag",
+  "version": "0.0.1",
+  "author": "Dave Martin <dpmartin@yahoo.com>",
+  "description": "Caches etags in local storage for $http requests",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/forforf/angular-etag.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "karma": "~0.10",
+    "karma-jasmine": "~0.1"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/karma start ./test/karma.config.js --single-run --browsers PhantomJS"
+  }
+}

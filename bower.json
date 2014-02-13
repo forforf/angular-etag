@@ -1,0 +1,28 @@
+{
+  "name": "angular-etag",
+  "main": "angular-etag.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/forforf/angular-etag",
+  "authors": [
+    "David Martin <dmarti21@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/forforf/angular-etag.git"
+  },
+  "description": "Caches etags in local storage for $http requests",
+  "dependencies":{
+    "angular": "latest"
+  },
+  "devDependencies": {
+    "angular-mocks":"latest"
+  },
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
