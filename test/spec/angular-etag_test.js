@@ -267,7 +267,7 @@ describe('angular-etag', function(){
           });
         });
 
-        describe('server responds with  error status', function(){
+        describe('server responds with error status', function(){
           var urlOpts;
           var respData;
           var reqHeaders;
