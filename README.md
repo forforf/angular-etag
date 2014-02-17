@@ -34,7 +34,7 @@ Inject the dependency into your module.
 `angular.module('YourModule', ['AngularEtag'])`
 
 
-Inject and use the 'ehttp' object in your controller or services. `ehttp.get` is a drop in replacement for `$http.get`
+Inject and use the 'ehttp' object in your controller or services. `ehttp.get` isn't quite a drop in replacement for `$http.get`, yet, but it's quite similar.
 
     function YourCtrl($scope, ehhtp){
       var urlOpts = {url: 'http://some.etag.server.com'};
