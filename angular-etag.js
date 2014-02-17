@@ -56,7 +56,7 @@ etagUtil.factory('etagLocalStorageCache', function(){
     return function ehttpGet(urlOpts){
 
       // Handlers for the server response
-      var respFn = {}
+      var respFn = {};
 
       // cache the Etag prior to returning the reponse
       respFn.cacheEtag = function(resp){
@@ -186,37 +186,31 @@ angular.module('AngularEtag', [])
           angular.extend(urlOpts, {method: 'GET'});
 
           //_http decorated with etag
-          _http.etagGet(urlOpts);
+          //_http.etagGet(urlOpts);
           return _http(urlOpts)
             .then(respFn.cacheEtag)
             .catch(respFn.catchUnmodified);
         }
-
       }
-
     };
   })
 
 .config(function($provide, etagLocalStorageCacheProvider){
 
-    $provide.decorator('$http', function($delegate, $window, $q){
-      $delegate.etagGet = etagLocalStorageCacheProvider.$get();
-      console.log('etag', etagLocalStorageCacheProvider);
-      console.log('from config d', $delegate);
-      console.log('from config w', $window);
-      console.log('from config q', $q);
+    $provide.decorator('$http', function($delegate){
+      $delegate.etagGetInit = etagLocalStorageCacheProvider.$get();
       return $delegate;
     });
   })
 
-// ehttp wraps _http get function and caches etag responses to localStorage
-.factory('ehttp', function($http, $window, $q, etagLocalStorageCache){
+//ehttp drop in replacement for $http, with etagGet functionality
+//note: with this service $http and ehttp are identical
+.factory('ehttp', function($http, $window, $q){
 
-  //console.log('factory', etagLocalStorageCache);
-  var ehttpGet = $http.etagGet($http, $window, $q);
+  //I don't like this but I'm currently stumped on how to do it better
+  // specifically I don't like directly changing $http here
+  // maybe create a function in config/provider that adds the method?
+  $http.etagGet = $http.etagGetInit($http, $window, $q);
 
-
-  return {
-    get: ehttpGet
-  };
+  return $http;
 });

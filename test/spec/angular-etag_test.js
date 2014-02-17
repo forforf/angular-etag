@@ -42,10 +42,29 @@ describe('angular-etag', function(){
     }));
 
     it('sanity check', function(){
-      expect(_ehttp).toBeDefined();
+      expect(_ehttp.etagGet).toBeDefined();
     });
 
-    describe('.get', function(){
+
+    describe('drop in $http replacement', function(){
+
+      //There's probably a better way to test this
+      it('supports http methods', function(){
+        expect(_ehttp.get).toBeDefined();
+        expect(_ehttp.post).toBeDefined();
+        expect(_ehttp.put).toBeDefined();
+        expect(_ehttp.delete).toBeDefined();
+        expect(_ehttp.head).toBeDefined();
+      });
+
+      it('has transform defaults', function(){
+        expect(_ehttp.defaults.transformRequest).toBeDefined();
+        expect(_ehttp.defaults.transformResponse).toBeDefined();
+      });
+
+    });
+
+    describe('.etagGet', function(){
       describe('nominal cases', function(){
         describe('no etag in cache, no etag in response', function(){
           var urlOpts;
@@ -68,7 +87,7 @@ describe('angular-etag', function(){
             localStorageItem = null;
             etagItem = localStorageItem;
 
-            _ehttp.get(urlOpts)
+            _ehttp.etagGet(urlOpts)
               .then(function(resp){
                 reqHeaders = urlOpts.headers;
                 respData = resp.data;
@@ -121,7 +140,7 @@ describe('angular-etag', function(){
             localStorageItem = null;
             etagItem = localStorageItem;
 
-            _ehttp.get(urlOpts)
+            _ehttp.etagGet(urlOpts)
               .then(function(resp){
                 //console.log('resp', resp, resp.headers());
                 reqHeaders = urlOpts.headers;
@@ -180,7 +199,7 @@ describe('angular-etag', function(){
             localStorageItem = '{"etag":"abcde","opts":{"url":"/foo","method":"GET"},"response":{"data":{"data":"fake"},"status":203}}';
             etagItem = localStorageItem;
 
-            _ehttp.get(urlOpts)
+            _ehttp.etagGet(urlOpts)
               .then(function(resp){
                 respHeaders = resp.headers();
                 reqHeaders = urlOpts.headers;
@@ -230,7 +249,7 @@ describe('angular-etag', function(){
             localStorageItem = '{"etag":"abcde","opts":{"url":"/foo","method":"GET"},"response":{"data":{"data":"fake"},"status":203}}';
             etagItem = localStorageItem;
 
-            _ehttp.get(urlOpts)
+            _ehttp.etagGet(urlOpts)
               .then(function(resp){
                 respHeaders = resp.headers();
                 respData = resp.data;
@@ -288,7 +307,7 @@ describe('angular-etag', function(){
             urlOpts = {url: 'test5'};
 
 
-            _ehttp.get(urlOpts)
+            _ehttp.etagGet(urlOpts)
               .then(function(resp){
                 respHeaders = resp.headers();
                 respData = resp.data;
