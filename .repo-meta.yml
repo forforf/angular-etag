@@ -1,0 +1,12 @@
+---
+ratings:
+  stable: 8
+  useful: 8
+  caliber: 7
+  tidy: 5
+  tended: 8
+  tests: 7
+  unique: 6
+progress:
+  "stable":
+    "feature complete": null

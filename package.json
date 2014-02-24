@@ -1,6 +1,6 @@
 {
   "name": "angular-etag",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Dave Martin <dpmartin@yahoo.com>",
   "description": "Caches etags in local storage for $http requests",
   "repository": {
