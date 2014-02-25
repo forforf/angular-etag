@@ -3,10 +3,10 @@ ratings:
   stable: 8
   useful: 8
   caliber: 7
-  tidy: 5
+  tidy: 7
   tended: 8
-  tests: 7
+  tests: 8
   unique: 6
 progress:
-  "stable":
-    "versioned": null
+  stable: "versioned release"
+
